@@ -8,27 +8,27 @@ from .extensions import mail
 from config.config import email_detail
 
 
-email = Blueprint('email', __name__)
+email = Blueprint('email', __name__, url_prefix='/mail')
 
 
-@email.route('/send-mail', methods=["POST"])
+@email.route('/send', methods=["POST"])
 def send_email():
     try:
-        if request.headers.get('Secret_code') \
-            != email_detail['secret_code']:
+        if request.headers.get('Auth-Code') != email_detail['Auth-Code']:     
             return jsonify(
                 response="You are not Authorized",
                 status=401
             )
         
+        
         msg = Message(
             subject=request.json['subject'],
             body=request.json['body'],
-            recipients=email_detail['recipients']
+            recipients=email_detail['Recipients']
         )
 
         mail.send(msg)
-
+        
         return jsonify(
             response="The mail has been sent correctly",
             status=200,

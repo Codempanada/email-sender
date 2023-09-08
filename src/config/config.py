@@ -24,11 +24,11 @@ class TestingConfig(Config):
 
 
 email_detail = {
-    "recipients": [
+    "Recipients": [
         os.environ['MAIL_USERNAME'],
         os.environ['MAIL_BACK_UP']
     ],
-    "secret_code": os.environ['SECRET_CODE']
+    "Auth-Code": os.environ['AUTH_CODE']
 }
 
 config = {
@@ -36,3 +36,6 @@ config = {
     'testing': TestingConfig,
     'default': DevelopmentConfig
 }
+
+
+ORIGIN = os.environ['ORIGIN']
